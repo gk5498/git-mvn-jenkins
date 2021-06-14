@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d794a1c2-a997-4bef-a313-d3631bacc6f0" >
+		<http:listener-connection host="0.0.0.0" port="8085" />
+	</http:listener-config>
+	<flow name="jenkins-demoFlow" doc:id="542e4084-1c06-41ab-b8c2-a389440de57f" >
+		<http:listener doc:name="Listener" doc:id="c6378586-b5b0-4eb4-9fdc-a48441cde73c" config-ref="HTTP_Listener_config" path="/request"/>
+		<ee:transform doc:name="Transform Message" doc:id="583038f1-398c-4fd0-b8a3-c9732dfbf4dd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	result:"successfully checkedin"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
